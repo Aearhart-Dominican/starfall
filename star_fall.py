@@ -95,7 +95,7 @@ def make_text(text, font_size, x, y, color = BLK, font = "./slkscr.ttf"):
 
 
 player = Mouse()
-stars = [Star(-32), Star(-128), Star(-198)]
+stars = [Star(-32), Star(-256), Star(-512)]
 
 background = py.transform.scale(make_img("./background.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
 mouse_sprite = py.transform.scale(make_img("./moose.png"), (128, 128))
@@ -119,6 +119,8 @@ while running:
             for star in stars:
                 star.draw()
                 star.speed = 10 + int((time.time() - game_time) // 7)
+                if star.speed > 40:
+                    star.speed = 40
                 if star.caught:
                     star.caught = False
                     star.hitbox.y = -100
@@ -142,6 +144,8 @@ while running:
             
             player.move()
             player.speed_multiplier = 5 + player.score / 3
+            if player.speed_multiplier > 25:
+                player.speed_multiplier = 25
             
             for star in stars:
                 star.move()
